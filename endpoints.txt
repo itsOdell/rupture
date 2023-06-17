@@ -1,0 +1,25 @@
+/* USER */
+GET /api/v1/user/:odell - get info of user 'odell' - done
+POST /api/v1/user/signup - create an account - done
+POST /api/v1/user/login - login to account - done
+POST /api/v1/user/follow/:odell - follow the user 'odell' - done
+POST /api/v1/user/unfollow/:odell - unfollow the user 'odell' - done
+PATCH /api/v1/user/ - update own account info - done
+GET /api/v1/user/followers/:odell - get a list of users who follower 'odell' - done
+GET /api/v1/user/following/:odell - get a list of users who 'odell' follows - done
+
+
+
+/* POST */
+POST /api/v1/post - uploads a post on logged in account
+POST /api/v1/post/like/:123 - sends a like to the post with id of 123
+POST /api/v1/post/unlike/:123 - unlike to the post with id of 123
+POST /api/v1/post/save/:123 - saves a post with id of 123 to the users saved
+POST /api/v1/post/unsave/:123 - unsaves a post with id of 123 to the users saved
+DELETE /api/v1/post/:123 - delete a post with the id 123 from the logged in user
+GET /api/v1/post/:odell - get a list of posts from the user 'odell'
+GET /api/v1/post/ - get a list of posts from the people the logged in user follows and sorts them chronologically, much like instagrams home page
+
+
+
+/* COMMENT */
