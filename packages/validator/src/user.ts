@@ -39,7 +39,10 @@ export async function validateToUpdate(toUpdate: possibleUpdateValues): Promise<
     await JoiUpdateUserSchema.validateAsync(toUpdate);
 }
 
-export async function updateUserWithValidValues(requestingUser: UserDocument, toUpdate: possibleUpdateValues): Promise<void> {
+export async function updateUserWithValidValues(
+    requestingUser: UserDocument,
+    toUpdate: possibleUpdateValues
+): Promise<void> {
     await requestingUser?.updateOne(toUpdate, {
         new: true,
         runValidators: true

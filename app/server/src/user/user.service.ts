@@ -5,7 +5,12 @@ import { DatabaseError } from "../errors";
 import { setToCache } from "../redis";
 import type { MediaDocument } from "@rupture/types/src/media";
 import type { RequestWithToken } from "@rupture/types/src/express";
-import type { UserDocument, UserFollowersOrFollowing, possibleUpdateValues, signingUpUser } from "@rupture/types/src/user";
+import type {
+    UserDocument,
+    UserFollowersOrFollowing,
+    possibleUpdateValues,
+    signingUpUser
+} from "@rupture/types/src/user";
 import type { Request } from "express";
 
 export const getOneUser = async function (userName: string): Promise<UserDocument> {

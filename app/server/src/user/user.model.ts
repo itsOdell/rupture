@@ -17,7 +17,9 @@ export const JoiUserLoginSchema = Joi.object<Pick<UserSchema, "email" | "passwor
     password: Joi.string().required().min(6)
 });
 
-export const JoiUpdateUserSchema = Joi.object<Omit<UserSchema, "password" | "posts" | "saved" | "followers" | "following">>({
+export const JoiUpdateUserSchema = Joi.object<
+    Omit<UserSchema, "password" | "posts" | "saved" | "followers" | "following">
+>({
     firstName: Joi.string().optional(),
     lastName: Joi.string().optional(),
     userName: Joi.string().optional().min(3),

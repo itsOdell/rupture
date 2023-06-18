@@ -25,7 +25,12 @@ export async function redisDisconnect(): Promise<void> {
 }
 
 // make this a closure
-export async function getFromCache(req: Request, res: Response, next: NextFunction, key: string): Promise<Response | void> {
+export async function getFromCache(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+    key: string
+): Promise<Response | void> {
     const data = await redisClient.get(key);
 
     if (data !== null) {
