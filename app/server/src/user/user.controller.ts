@@ -1,6 +1,6 @@
 import userServices from "./user.service";
-import { asyncHandler } from "@rupture/utils/src/asyncHandler";
-import type { NormalReqRes, RequestWithToken } from "@rupture/types/src/express";
+import { asyncHandler } from "@rupture/utils";
+import type { NormalReqRes, RequestWithToken } from "@rupture/types";
 
 export const getUser = asyncHandler(async function (req, res) {
     const user = await userServices.getOneUser(req.params.userName);

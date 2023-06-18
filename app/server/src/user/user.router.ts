@@ -3,7 +3,7 @@ import userController from "./user.controller";
 import { Router } from "express";
 import { getFromCache } from "../redis";
 import { verifyToken, verifyUser } from "@rupture/middleware";
-import { userFollowCacheKey } from "@rupture/utils/src/user";
+import { userFollowCacheKey } from "@rupture/utils";
 
 const userRouter = Router();
 

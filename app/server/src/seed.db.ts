@@ -1,8 +1,8 @@
 import Media from "./media/media.model";
 import User from "./user/user.model";
 import Post from "./post/post.model";
-import seedingScripts from "@rupture/scripts/src/seeding";
 import { connect, disconnect } from "./init.db";
+import { seedDefaultPfpOrGetId, seedDefaultPostOrGetId, seedDefaultUserOrGetId } from "@rupture/scripts";
 
 async function seedDB(): Promise<void> {
     try {
@@ -13,17 +13,17 @@ async function seedDB(): Promise<void> {
             email: "test1@gmail.com"
         });
         const defaultPostExists = await Post.findOne({
-            userId: await seedingScripts.populateWithDefaultUser()
+            userId: await seedDefaultUserOrGetId()
         });
 
         if (defaultPfpExists === null) {
-            await seedingScripts.populateWithDefaultPfp();
+            await seedDefaultPfpOrGetId();
         }
         if (defaultUserExists === null) {
-            await seedingScripts.populateWithDefaultUser();
+            await seedDefaultUserOrGetId();
         }
         if (defaultPostExists === null) {
-            await seedingScripts.populateWithDefaultPost();
+            await seedDefaultPostOrGetId();
         }
     } catch (error) {
         console.log("There was an error seeding the database");

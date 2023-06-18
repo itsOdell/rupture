@@ -1,6 +1,6 @@
 import { AppError } from "../errors";
-import { createNewPost } from "@rupture/utils/src/post";
-import type { RequestWithToken } from "@rupture/types/src/express";
+import { createNewPost } from "@rupture/utils";
+import type { RequestWithToken } from "@rupture/types";
 
 const postServices = {
     postOnePost: async function (req: RequestWithToken): Promise<void> {

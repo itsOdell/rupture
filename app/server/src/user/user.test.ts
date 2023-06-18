@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken"
 import { createOneUser } from "./user.service";
 import { MongoMemoryServer } from "mongodb-memory-server"
-import { UserDocument } from "@rupture/types/src/user";
+import { UserDocument } from "@rupture/types";
 import { JWT_SECRET } from "@rupture/constants";
 import redisClient, { redisConnect, redisDisconnect } from "../redis";
 

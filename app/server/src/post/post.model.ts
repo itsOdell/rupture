@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import type { PostSchema } from "@rupture/types/src/post";
+import type { PostSchema } from "@rupture/types";
 
 const postSchema = new Schema<PostSchema>(
     {

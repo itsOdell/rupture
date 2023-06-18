@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import type { MediaSchema } from "@rupture/types/src/media";
+import type { MediaSchema } from "@rupture/types";
 
 const mediaSchema = new Schema<MediaSchema>({
     originalname: {

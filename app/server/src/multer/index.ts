@@ -2,7 +2,7 @@ import multer from "multer";
 import { resolve } from "path";
 import { ASSETS_DIR } from "@rupture/constants";
 import type { Request } from "express";
-import type { MulterFile, MulterDestinationCb, MulterFilenameCb } from "@rupture/types/src/multer";
+import type { MulterFile, MulterDestinationCb, MulterFilenameCb } from "@rupture/types";
 
 const storage = multer.diskStorage({
     destination: function (req: Request, file: MulterFile, cb: MulterDestinationCb) {

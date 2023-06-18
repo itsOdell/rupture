@@ -1,6 +1,6 @@
 import postServices from "./post.service";
-import { asyncHandler } from "@rupture/utils/src/asyncHandler";
-import type { RequestWithToken } from "@rupture/types/src/express";
+import { asyncHandler } from "@rupture/utils";
+import type { RequestWithToken } from "@rupture/types";
 import type { Request, Response } from "express";
 
 export const uploadPost = asyncHandler(async function (req: RequestWithToken, res) {

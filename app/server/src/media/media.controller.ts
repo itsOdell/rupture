@@ -1,7 +1,7 @@
 import path from "path";
 import { getMediaById } from "./media.service";
 import { ASSETS_DIR } from "@rupture/constants";
-import { asyncHandler } from "@rupture/utils/src/asyncHandler";
+import { asyncHandler } from "@rupture/utils";
 import type { Response } from "express";
 
 export const getMedia = asyncHandler(async function (req, res): Promise<Response | void> {

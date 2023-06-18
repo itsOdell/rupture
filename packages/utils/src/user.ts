@@ -98,7 +98,7 @@ export async function hashPass(password: string): Promise<string> {
     return await bcrypt.hash(password, SALT);
 }
 
-export async function paginateFollowersFollowing(
+export async function paginateFollowersOrFollowing(
     ids: string[],
     skip: number,
     limit: number
@@ -123,7 +123,7 @@ const userUtils = {
     userFollowCacheKey,
     getUserInfo,
     hashPass,
-    paginateFollowersFollowing
+    paginateFollowersFollowing: paginateFollowersOrFollowing
 };
 
 export default userUtils;

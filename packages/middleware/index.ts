@@ -2,9 +2,9 @@ import jwt from "jsonwebtoken";
 import User from "@rupture/server/src/user/user.model";
 import { AuthError } from "@rupture/server/src/errors";
 import { JWT_SECRET } from "@rupture/constants";
-import { asyncHandler } from "@rupture/utils/src/asyncHandler";
+import { asyncHandler } from "@rupture/utils";
 import type { NextFunction, Response, Request } from "express";
-import type { NormalReqRes, RequestWithToken, UserToken } from "@rupture/types/src/express";
+import type { NormalReqRes, RequestWithToken, UserToken } from "@rupture/types";
 
 export const verifyToken = asyncHandler(async function (req: RequestWithToken, res: Response, next: NextFunction) {
     const requestToken = req.headers.authorization?.split(" ")[1];

@@ -3,7 +3,7 @@ import User from "@rupture/server/src/user/user.model";
 import Post from "@rupture/server/src/post/post.model";
 import type { Types } from "mongoose";
 
-export async function populateWithDefaultPfp(): Promise<Types.ObjectId> {
+export async function seedDefaultPfpOrGetId(): Promise<Types.ObjectId> {
     let defaultPfp = await Media.findOne({ filename: "default.png" });
 
     if (defaultPfp === null) {
@@ -17,7 +17,7 @@ export async function populateWithDefaultPfp(): Promise<Types.ObjectId> {
     return defaultPfp?._id;
 }
 
-export async function populateWithDefaultUser(): Promise<Types.ObjectId> {
+export async function seedDefaultUserOrGetId(): Promise<Types.ObjectId> {
     let defaultUser = await User.findOne({ userName: "test1", email: "test1@gmail.com" });
 
     if (defaultUser === null) {
@@ -32,13 +32,13 @@ export async function populateWithDefaultUser(): Promise<Types.ObjectId> {
     return defaultUser?._id;
 }
 
-export async function populateWithDefaultPost(): Promise<Types.ObjectId> {
-    let defaultPost = await Post.findOne({ userId: await populateWithDefaultUser() });
+export async function seedDefaultPostOrGetId(): Promise<Types.ObjectId> {
+    let defaultPost = await Post.findOne({ userId: await seedDefaultUserOrGetId() });
 
     if (defaultPost === null) {
         defaultPost = await new Post({
-            userId: await populateWithDefaultUser(),
-            mediaId: await populateWithDefaultPfp()
+            userId: await seedDefaultUserOrGetId(),
+            mediaId: await seedDefaultPfpOrGetId()
         }).save();
     }
 
@@ -46,9 +46,9 @@ export async function populateWithDefaultPost(): Promise<Types.ObjectId> {
 }
 
 const seedingcripts = {
-    populateWithDefaultPfp,
-    populateWithDefaultUser,
-    populateWithDefaultPost
+    populateWithDefaultPfp: seedDefaultPfpOrGetId,
+    populateWithDefaultUser: seedDefaultUserOrGetId,
+    populateWithDefaultPost: seedDefaultPostOrGetId
 };
 
 export default seedingcripts;

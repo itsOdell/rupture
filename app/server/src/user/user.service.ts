@@ -3,14 +3,14 @@ import userUtils from "@rupture/utils/src/user";
 import userValidators from "@rupture/validator/src/user";
 import { DatabaseError } from "../errors";
 import { setToCache } from "../redis";
-import type { MediaDocument } from "@rupture/types/src/media";
-import type { RequestWithToken } from "@rupture/types/src/express";
 import type {
     UserDocument,
     UserFollowersOrFollowing,
     possibleUpdateValues,
-    signingUpUser
-} from "@rupture/types/src/user";
+    signingUpUser,
+    MediaDocument,
+    RequestWithToken
+} from "@rupture/types";
 import type { Request } from "express";
 
 export const getOneUser = async function (userName: string): Promise<UserDocument> {

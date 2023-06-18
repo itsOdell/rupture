@@ -1,7 +1,7 @@
 import Media from "./media.model";
 import { Types } from "mongoose";
 import { DatabaseError } from "../errors";
-import type { MediaDocument } from "@rupture/types/src/media";
+import type { MediaDocument } from "@rupture/types";
 
 export const getMediaById = async function (id: string): Promise<MediaDocument | void> {
     Types.ObjectId.isValid(id);

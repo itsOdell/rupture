@@ -1,8 +1,8 @@
 import Joi from "joi";
+import Media from "../media/media.model";
 import { Schema, model } from "mongoose";
 import { emailValidator, websiteValidator } from "@rupture/validator";
-import { populateWithDefaultPfp } from "@rupture/scripts";
-import type { UserSchema } from "@rupture/types/src/user";
+import type { UserSchema } from "@rupture/types";
 
 export const JoiUserSchema = Joi.object<UserSchema>({
     firstName: Joi.string().required(),
@@ -122,7 +122,11 @@ const userSchema = new Schema<UserSchema>(
 userSchema.pre<UserSchema>("save", async function (next) {
     if (this.profilePicture === undefined) {
         try {
-            this.profilePicture = String(await populateWithDefaultPfp());
+            const pfpId = await Media.findOne({ filename: "default.png" });
+            if (pfpId === null) {
+                throw new Error("Database hasn't been seeded, please run 'npm run seed'");
+            }
+            this.profilePicture = String(pfpId);
             next();
         } catch (err) {
             next(err as Error);
