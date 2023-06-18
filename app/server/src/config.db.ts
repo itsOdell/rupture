@@ -3,7 +3,7 @@ import User from "./user/user.model";
 import Post from "./post/post.model";
 import { seedDefaultPfpOrGetId, seedDefaultPostOrGetId, seedDefaultUserOrGetId } from "@rupture/scripts";
 
-async function seedDB(): Promise<void> {
+export async function seedDB(): Promise<void> {
     try {
         const defaultPfpExists = await Media.findOne({ filename: "default.png" });
         const defaultUserExists = await User.findOne({
@@ -30,4 +30,13 @@ async function seedDB(): Promise<void> {
     }
 }
 
-export default seedDB;
+export async function deleteSeed(): Promise<void> {
+    try {
+        await User.deleteMany();
+        await Media.deleteMany();
+        await Post.deleteMany();
+        console.log("seed deleted successfully");
+    } catch (error) {
+        console.error(error);
+    }
+}
