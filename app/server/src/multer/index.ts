@@ -9,7 +9,9 @@ const storage = multer.diskStorage({
         cb(null, resolve(ASSETS_DIR));
     },
     filename: function (req: Request, file: MulterFile, cb: MulterFilenameCb) {
-        cb(null, `${Date.now()}_${file.originalname}`);
+        const invalidCharsRegex = /[^a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=%]/g;
+        const cleanedFilename = file.originalname.replace(invalidCharsRegex, "");
+        cb(null, `${Date.now()}_${cleanedFilename}`);
     }
 });
 
