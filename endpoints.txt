@@ -11,7 +11,7 @@ GET /api/v1/user/following/:odell - get a list of users who 'odell' follows - do
 
 
 /* POST */
-POST /api/v1/post - uploads a post on logged in account
+POST /api/v1/post - uploads a post on logged in account - done
 POST /api/v1/post/like/:123 - sends a like to the post with id of 123
 POST /api/v1/post/unlike/:123 - unlike to the post with id of 123
 POST /api/v1/post/save/:123 - saves a post with id of 123 to the users saved
