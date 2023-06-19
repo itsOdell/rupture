@@ -33,5 +33,6 @@ userRouter.post("/follow/:userName", [verifyToken, verifyUser], userController.f
 userRouter.post("/unfollow/:userName", [verifyToken, verifyUser], userController.unFollowUser);
 userRouter.patch("/", [verifyToken, verifyUser, upload.single("profilePicture")], userController.patchUser);
 // ^ fix media still being uploaded even if falsy values
+userRouter.delete("/", [verifyToken, verifyUser], userController.deleteUser);
 
 export default userRouter;

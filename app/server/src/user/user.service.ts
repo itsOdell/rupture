@@ -117,6 +117,10 @@ export const getUserFollowing = async function (req: Request): Promise<UserFollo
     return following;
 };
 
+export const deleteOneUser = async function (userToDelete: UserDocument): Promise<void> {
+    await userToDelete?.deleteOne();
+};
+
 export const userServices = {
     getOneUser,
     createOneUser,
@@ -125,7 +129,8 @@ export const userServices = {
     unFollowOneUser,
     patchOneUser,
     getUserFollowers,
-    getUserFollowing
+    getUserFollowing,
+    deleteOneUser
 };
 
 export default userServices;

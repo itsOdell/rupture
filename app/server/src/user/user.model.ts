@@ -1,4 +1,6 @@
 import Joi from "joi";
+import Media from "../media/media.model";
+import Post from "../post/post.model";
 import { Schema, model } from "mongoose";
 import { emailValidator, websiteValidator } from "@rupture/validator";
 import type { UserSchema } from "@rupture/types";
@@ -129,6 +131,18 @@ userSchema.pre<UserSchema>("save", async function (next) {
         }
     } else {
         next();
+    }
+});
+
+userSchema.pre("deleteOne", { document: true, query: false }, async function (next) {
+    const userId = this._id;
+
+    try {
+        await Media.deleteMany({ userId });
+        await Post.deleteMany({ userId });
+        next();
+    } catch (error) {
+        next(error as Error);
     }
 });
 

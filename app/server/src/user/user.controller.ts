@@ -60,6 +60,13 @@ export const getFollowing = asyncHandler(async function (req, res) {
     return res.status(200).json(following);
 });
 
+export const deleteUser = asyncHandler(async function (req: RequestWithToken, res) {
+    await userServices.deleteOneUser(req.requestingUser);
+    return res.status(200).json({
+        message: "succesfully deleted user"
+    });
+} as NormalReqRes);
+
 const userController = {
     getUser,
     createUser,
@@ -68,7 +75,8 @@ const userController = {
     unFollowUser,
     patchUser,
     getFollowers,
-    getFollowing
+    getFollowing,
+    deleteUser
 };
 
 export default userController;
