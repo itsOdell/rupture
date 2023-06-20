@@ -1,6 +1,10 @@
-# Rupture
+# Rupture 
 
-**Rupture** is a social media web app developed with the intention of being open source for everyone to view it's internal working and contribute to it. The coding style follows a lot of the conventions and best practices of popular organizations, repos and online articles
+[![License: CC BY-NC](https://img.shields.io/badge/License-CC%20BY--NC-crimson.svg)](https://github.com/itsOdell/rupture/LICENSE)
+![GitHub contributors](https://img.shields.io/github/contributors/itsOdell/rupture?color=blue)
+
+
+**Rupture** is a social media web app developed with the goal of being open source for everyone to view it, understand the internal workings and contribute to it. The coding style follows a lot of the conventions and best practices of popular organizations, repos and online articles.
 
 ## Table of Contents
 
