@@ -2,6 +2,8 @@
 
 [![License: CC BY-NC](https://img.shields.io/badge/License-CC%20BY--NC-crimson.svg)](https://github.com/itsOdell/rupture/LICENSE)
 ![GitHub contributors](https://img.shields.io/github/contributors/itsOdell/rupture?color=blue)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/itsOdell/rupture?color=lavender)
+
 
 
 **Rupture** is a social media web app developed with the goal of being open source for everyone to view it, understand the internal workings and contribute to it. The coding style follows a lot of the conventions and best practices of popular organizations, repos and online articles.
@@ -17,7 +19,7 @@
 
 ## Overview
 
-Rupture is a social media web app that allows users to connect and share their thoughts, photos, experiences and message eaech other. It provides a modern and intuitive user interface with a seamless user experience. The application is designed to prioritize clean code and follows the monorepo structure, making it easy to maintain and scale.
+Rupture is a social media web app that allows users to connect with one another and share their thoughts, photos, experiences and message eaech other. It provides a modern and intuitive user interface with a seamless user experience. The application is designed to prioritize clean code and best practices followed by many world-leading organzations but without the __bias__, __agenda__ and __censorship__ big tech corporations push.
 
 ## Features
 
@@ -33,9 +35,10 @@ Rupture is a social media web app that allows users to connect and share their t
 The Rupture project utilizes the following technologies:
 
 - **TypeScript**: A statically-typed superset of JavaScript that improves developer productivity and code maintainability.
-- **MongoDB**: A NoSQL database used to store and retrieve data efficiently.
+- **MongoDB**: A NoSQL database used to store and retrieve data efficiently but with the flexibility that most SQL RDMS's don't have.
+- **Redis**: An in-memory disk, caching database used to store and retrieve data efficiently without having multiple duplicate request and blazingly fast performance.
 - **Express**: A minimal and flexible web application framework for Node.js used to handle server-side logic and API endpoints.
-- **React**: A popular JavaScript library for building user interfaces, enabling interactive and dynamic components.
+- **NextJS**: A popular React library for building user interfaces, enabling interactive/dynamic components with server-side rendering capabilities.
 - **Tailwind CSS**: A utility-first CSS framework that provides a collection of pre-built classes for rapid UI development.
 
 ## Getting Started
@@ -45,7 +48,7 @@ To get a local copy of the Rupture project up and running, follow these steps:
 1. Clone the repository:
 
    ```shell
-   git clone https://github.com/your-username/rupture.git
+   git clone https://github.com/itsOdell/rupture
    cd rupture
    ```
 
@@ -57,7 +60,7 @@ To get a local copy of the Rupture project up and running, follow these steps:
 
 3. Set up the environment variables:
 
-   - Set your own variables in the files 'rupture/.env.development' and 'rupture/.env.production' respectively
+   - Set your own variables in the new files 'rupture/.env.development' and 'rupture/.env.production' by creating it. Make sure __NOT__ to delete the __.env.development.example__ or __.env.production.example__ files
 
 4. Start the server:
 
@@ -65,19 +68,14 @@ To get a local copy of the Rupture project up and running, follow these steps:
    npm run start:dev
    ```
 
-Now you should be able to access the Rupture web application locally at http://localhost:PORT
+If you haven't change the default port which is set to 3001 in the .env files, you should be able to access the Rupture api locally at http://localhost:3001/api
 
 ## Contributing
 
-Contributions to Rupture are welcome and encouraged! To contribute, follow these steps:
+Contributions to Rupture are welcome and encouraged! To contribute and learn more about the codebase, read [CONTRIBUTING.md](https://github.com/itsOdell/rupture/blob/main/CONTRIBUTING.md) to get started
 
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make the necessary changes and commit them.
-4. Push your branch to your forked repository.
-5. Open a pull request in the original repository.
-6. Please ensure that your code follows the project's coding style and conventions. Additionally, make sure to include appropriate tests for any new features or changes.
+If you have no idea on how to get started on contributing, watch [this video](https://www.youtube.com/watch?v=c6b6B9oN4Vg&list=PLZhVtg0EdgcebCl8g2KNAKKUz22uwrJO7&index=1&ab_channel=MetaOpenSource)
 
 ## License
 
-This project is licensed under the CC BY-NC License. Feel free to use and modify the code as per the terms of this license.
+This project is licensed under the [CC BY-NC License](https://github.com/itsOdell/rupture/blob/main/LICENSE). Feel free to use and modify the code as per the terms of this license.
