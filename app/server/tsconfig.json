@@ -1,15 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES6",
-    "module": "CommonJS",
-    "paths": {
-      "@rupture/constants": ["../../packages/constants/index.ts"],
-      "@rupture/middleware": ["../../packages/middleware/index.ts"],
-      "@rupture/scripts": ["../../packages/scripts/index.ts"],
-      "@rupture/types": ["../../packages/types/index.ts"],
-      "@rupture/utils": ["../../packages/utils/index.ts"],
-      "@rupture/validator": ["../../packages/validator/index.ts"],
-    }
+    "outDir": "dist",
+    "rootDir": "src"
   }
 }
