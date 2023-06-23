@@ -20,5 +20,5 @@
         "@typescript-eslint/restrict-template-expressions": 0,
         "@typescript-eslint/no-namespace": 0
     },
-    "ignorePatterns": ["**/*.test.*", "node_modules"]
+    "ignorePatterns": ["**/*.test.*", "node_modules", "**/*.js"]
 }
