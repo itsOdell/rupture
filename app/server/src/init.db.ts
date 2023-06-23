@@ -3,6 +3,9 @@ import { MONGODB_URI } from "@rupture/constants";
 
 let connection: any = null;
 
+const test: string = "dummy test";
+console.log(test);
+
 export async function connect(): Promise<void> {
     try {
         connection = await mongoose.connect(MONGODB_URI);
