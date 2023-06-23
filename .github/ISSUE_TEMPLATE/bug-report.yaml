@@ -2,8 +2,7 @@ name: Bug Report
 
 description: Report a bug or issue in the rupture repository
 
-labels:
-    - bug
+labels: ["bug"]
 
 body: |
     ## Bug Report
