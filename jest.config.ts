@@ -13,4 +13,5 @@ export default {
   collectCoverage: false,
   coveragePathIgnorePatterns: ["/node_modules/"],
   coverageProvider: "v8",
+  modulePathIgnorePatterns: ['build'],
 };
