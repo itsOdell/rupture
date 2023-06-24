@@ -1,5 +1,5 @@
 ---
-name: Feature Request
+name: 🎉 Feature Request
 about: Suggest a new feature or enhancement
 title: "enhancement: "
 labels: "enhancment"
