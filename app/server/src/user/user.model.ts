@@ -3,8 +3,8 @@ import Media from "../media/media.model";
 import Post from "../post/post.model";
 import { Schema, model } from "mongoose";
 import { emailValidator, websiteValidator } from "@rupture/validator";
-import type { UserSchema } from "@rupture/types";
 import { seedDefaultPfpOrGetId } from "@rupture/scripts";
+import type { UserSchema } from "@rupture/types";
 
 export const JoiUserSchema = Joi.object<UserSchema>({
     firstName: Joi.string().required(),

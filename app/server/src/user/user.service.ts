@@ -98,7 +98,7 @@ export const getUserFollowers = async function (req: Request): Promise<UserFollo
     const { skip, limit } = req.query;
 
     const followerIds = (await User.findOne({ userName: requestedUser }))?.followers;
-    const followers = await userUtils.paginateFollowersFollowing(followerIds!, Number(skip), Number(limit));
+    const followers = await userUtils.paginateFollowersOrFollowing(followerIds!, Number(skip), Number(limit));
 
     await setToCache(userUtils.userFollowCacheKey(req, "followers"), JSON.stringify(followers), 300);
 
@@ -110,7 +110,7 @@ export const getUserFollowing = async function (req: Request): Promise<UserFollo
     const { skip, limit } = req.query;
 
     const followingIds = (await User.findOne({ userName: requestedUser }))?.following;
-    const following = await userUtils.paginateFollowersFollowing(followingIds!, Number(skip), Number(limit));
+    const following = await userUtils.paginateFollowersOrFollowing(followingIds!, Number(skip), Number(limit));
 
     await setToCache(userUtils.userFollowCacheKey(req, "following"), JSON.stringify(following), 300);
 

@@ -29,3 +29,5 @@ export const verifyUser = asyncHandler(async function (req: RequestWithToken, re
 
     next();
 } as NormalReqRes);
+
+export const verifyTokenAndUser = [verifyToken, verifyUser];

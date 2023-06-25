@@ -2,7 +2,7 @@ import upload from "../multer/";
 import userController from "./user.controller";
 import { Router } from "express";
 import { getFromCache } from "../redis";
-import { verifyToken, verifyUser } from "@rupture/middleware";
+import { verifyTokenAndUser } from "@rupture/middleware";
 import { userFollowCacheKey } from "@rupture/utils";
 
 const userRouter = Router();
@@ -29,10 +29,10 @@ userRouter.get(
 );
 
 /* USER SELF UPDATES */
-userRouter.post("/follow/:userName", [verifyToken, verifyUser], userController.followUser);
-userRouter.post("/unfollow/:userName", [verifyToken, verifyUser], userController.unFollowUser);
-userRouter.patch("/", [verifyToken, verifyUser, upload.single("profilePicture")], userController.patchUser);
+userRouter.post("/follow/:userName", verifyTokenAndUser, userController.followUser);
+userRouter.post("/unfollow/:userName", verifyTokenAndUser, userController.unFollowUser);
+userRouter.patch("/", verifyTokenAndUser, upload.single("profilePicture"), userController.patchUser);
 // ^ fix media still being uploaded even if falsy values
-userRouter.delete("/", [verifyToken, verifyUser], userController.deleteUser);
+userRouter.delete("/", verifyTokenAndUser, userController.deleteUser);
 
 export default userRouter;
