@@ -103,7 +103,7 @@ export async function paginateFollowersOrFollowing(
     skip: number,
     limit: number
 ): Promise<UserFollowersOrFollowing | []> {
-    // returns the query result of poeple who are following or are followed
+    // returns a paginated list of users from the specified user's followers/following list
     return (await User.find({ _id: { $in: ids } })
         .skip(skip)
         .limit(limit)
@@ -123,7 +123,7 @@ const userUtils = {
     userFollowCacheKey,
     getUserInfo,
     hashPass,
-    paginateFollowersFollowing: paginateFollowersOrFollowing
+    paginateFollowersOrFollowing
 };
 
 export default userUtils;

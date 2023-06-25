@@ -4,6 +4,7 @@ import type { NormalReqRes, RequestWithToken } from "@rupture/types";
 
 export const getUser = asyncHandler(async function (req, res) {
     const user = await userServices.getOneUser(req.params.userName);
+
     return res.status(200).json(user);
 });
 
@@ -52,11 +53,13 @@ export const patchUser = asyncHandler(async function (req: RequestWithToken, res
 
 export const getFollowers = asyncHandler(async function (req, res) {
     const followers = await userServices.getUserFollowers(req);
+
     return res.status(200).json(followers);
 });
 
 export const getFollowing = asyncHandler(async function (req, res) {
     const following = await userServices.getUserFollowing(req);
+
     return res.status(200).json(following);
 });
 
