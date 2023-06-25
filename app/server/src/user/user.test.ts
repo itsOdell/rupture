@@ -15,8 +15,10 @@ describe("User", () => {
     let request: supertest.SuperTest<supertest.Test>;
     let user1: UserDocument;
     let user2: UserDocument;
+    let user3: UserDocument;
     let token1: string;
     let token2: string;
+    let token3: string
 
     
     beforeAll(async () => {
@@ -37,8 +39,16 @@ describe("User", () => {
             email: "tes2t@gmail.com",
             password: "test123"
         })
+        user3 = await createOneUser({
+            firstName: "test",
+            lastName: "test",
+            userName: "test3",
+            email: "tes3t@gmail.com",
+            password: "test123"
+        })
         token1 = jwt.sign({user: {userName: user1?.userName, id: user1?._id}}, JWT_SECRET)
         token2 = jwt.sign({user: {userName: user2?.userName, id: user2?._id}}, JWT_SECRET)
+        token3 = jwt.sign({user: {userName: user3?.userName, id: user3?._id}}, JWT_SECRET)
         await redisConnect()
     });
 
@@ -479,6 +489,15 @@ describe("User", () => {
         })
     });
 
+    describe("the user to delete", () => {
+        it("should pass", async () => {
+            const res = await request.delete("/api/v1/user").set("Authorization", `Bearer ${token3}`).send().expect(200)
+
+            expect(res.body).toStrictEqual({
+                message: "succesfully deleted user"
+            })
+        })
+    })
 
     describe("the followers to get from user1", () => {
         beforeAll(async () => {
