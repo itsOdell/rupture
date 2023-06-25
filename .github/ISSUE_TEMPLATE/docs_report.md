@@ -1,5 +1,5 @@
 ---
-name: Documentation Issue
+name: 📖 Documentation Issue
 about: Report an issue or improvement related to documentation
 title: "documentation: "
 labels: "documentation"
