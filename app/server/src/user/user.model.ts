@@ -4,7 +4,7 @@ import Post from "../post/post.model";
 import { Schema, model } from "mongoose";
 import { emailValidator, websiteValidator } from "@rupture/validator";
 import { seedDefaultPfpOrGetId } from "@rupture/scripts";
-import type { UserSchema } from "@rupture/types";
+import type { UserSchema, possibleUpdateValues } from "@rupture/types";
 
 export const JoiUserSchema = Joi.object<UserSchema>({
     firstName: Joi.string().required(),
@@ -14,14 +14,12 @@ export const JoiUserSchema = Joi.object<UserSchema>({
     password: Joi.string().required().min(6)
 });
 
-export const JoiUserLoginSchema = Joi.object<Pick<UserSchema, "email" | "password">>({
+export const JoiUserLoginSchema = Joi.object<{ email: string; password: string }>({
     email: Joi.string().required().min(3).email(),
     password: Joi.string().required().min(6)
 });
 
-export const JoiUpdateUserSchema = Joi.object<
-    Omit<UserSchema, "password" | "posts" | "saved" | "followers" | "following">
->({
+export const JoiUpdateUserSchema = Joi.object<possibleUpdateValues>({
     firstName: Joi.string().optional(),
     lastName: Joi.string().optional(),
     userName: Joi.string().optional().min(3),
