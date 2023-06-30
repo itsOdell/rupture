@@ -7,7 +7,9 @@ const postServices = {
         if (req.file === undefined) {
             throw new AppError("No Media was sent", 400);
         }
-        await createNewPost(req);
+        const postId = await createNewPost(req);
+        req.requestingUser?.posts.push(String(postId));
+        await req.requestingUser?.save();
     }
 };
 
