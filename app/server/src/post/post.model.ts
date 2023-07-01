@@ -21,6 +21,10 @@ const postSchema = new Schema<PostSchema>(
             type: Number,
             default: 0
         },
+        commentCount: {
+            type: Number,
+            default: 0
+        },
         likes: [
             {
                 type: Schema.Types.ObjectId,
@@ -39,6 +43,7 @@ const postSchema = new Schema<PostSchema>(
 
 postSchema.pre<PostSchema>("validate", async function (next) {
     this.likeCount = this.likes.length;
+    this.commentCount = this.comments.length;
 });
 
 const Post = model("Posts", postSchema);

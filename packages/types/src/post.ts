@@ -7,6 +7,7 @@ export interface PostSchema {
     caption: string;
     comments: string[];
     likeCount: number;
+    commentCount: number;
     userId: Types.ObjectId;
 }
 
