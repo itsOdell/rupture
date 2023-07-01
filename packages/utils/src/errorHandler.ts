@@ -4,7 +4,7 @@ import { AppError, AuthError, DatabaseError } from "@rupture/server/src/errors";
 import type { Request, Response, NextFunction } from "express";
 
 export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction): Response {
-    // console.log(err);
+    console.log(err);
     if (err instanceof ValidationError) {
         return res.status(403).json({
             name: err.name,

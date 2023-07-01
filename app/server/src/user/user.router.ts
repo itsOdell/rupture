@@ -7,6 +7,10 @@ import { userFollowCacheKey } from "@rupture/utils";
 
 const userRouter = Router();
 
+/* MAIN */
+userRouter.get("/feed", verifyTokenAndUser, userController.getFeed);
+// add caching to this route
+
 /* LOGGING IN */
 userRouter.post("/signup", userController.createUser);
 userRouter.post("/login", userController.loginUser);

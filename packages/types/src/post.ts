@@ -20,3 +20,30 @@ export type PostDocument =
               never
           >)
     | null;
+
+export type Posts = Post[];
+
+export interface Post {
+    commentCount: number;
+    userId: UserId;
+    mediaId: MediaId;
+    caption: string;
+    likeCount: number;
+    likes: any[];
+    comments: any[];
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface UserId {
+    userName: string;
+    profilePicture: ProfilePicture;
+}
+
+export interface ProfilePicture {
+    path: string;
+}
+
+export interface MediaId {
+    path: string;
+}

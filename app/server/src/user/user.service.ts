@@ -9,9 +9,9 @@ import type {
     possibleUpdateValues,
     signingUpUser,
     MediaDocument,
-    RequestWithToken
+    RequestWithToken,
+    Posts
 } from "@rupture/types";
-import type { Request } from "express";
 
 export const getOneUser = async function (userName: string): Promise<UserDocument> {
     const userExists = await userUtils.getUserInfo(userName);
@@ -93,7 +93,7 @@ export const patchOneUser = async function (req: RequestWithToken): Promise<void
     await setToCache(requestingUser!.userName, JSON.stringify(updatedUserToCache));
 };
 
-export const getUserFollowers = async function (req: Request): Promise<UserFollowersOrFollowing> {
+export const getUserFollowers = async function (req: RequestWithToken): Promise<UserFollowersOrFollowing> {
     const { requestedUser } = req.params;
     const { skip, limit } = req.query;
 
@@ -105,7 +105,7 @@ export const getUserFollowers = async function (req: Request): Promise<UserFollo
     return followers;
 };
 
-export const getUserFollowing = async function (req: Request): Promise<UserFollowersOrFollowing> {
+export const getUserFollowing = async function (req: RequestWithToken): Promise<UserFollowersOrFollowing> {
     const { requestedUser } = req.params;
     const { skip, limit } = req.query;
 
@@ -121,6 +121,38 @@ export const deleteOneUser = async function (userToDelete: UserDocument): Promis
     await userToDelete?.deleteOne();
 };
 
+export const getUserFeed = async function (req: RequestWithToken): Promise<Posts> {
+    const { requestingUser } = req;
+    const { skip, limit } = req.query;
+
+    const followingIds = (await User.findOne({ userName: requestingUser?.userName }))?.following;
+    const posts = await User.find({ _id: { $in: followingIds } })
+        .populate([
+            {
+                path: "posts",
+                select: "-__v -_id -updatedAt",
+                populate: [
+                    {
+                        path: "mediaId",
+                        select: "path -_id"
+                    },
+                    {
+                        path: "userId",
+                        populate: {
+                            path: "profilePicture",
+                            select: "path -_id"
+                        },
+                        select: "userName profilePicture -_id"
+                    }
+                ],
+                options: { skip: Number(skip), limit: Number(limit) }
+            }
+        ])
+        .select("posts -_id");
+
+    return posts[0].posts as any;
+};
+
 export const userServices = {
     getOneUser,
     createOneUser,
@@ -130,7 +162,8 @@ export const userServices = {
     patchOneUser,
     getUserFollowers,
     getUserFollowing,
-    deleteOneUser
+    deleteOneUser,
+    getUserFeed
 };
 
 export default userServices;

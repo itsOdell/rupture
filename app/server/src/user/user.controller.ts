@@ -51,23 +51,29 @@ export const patchUser = asyncHandler(async function (req: RequestWithToken, res
     });
 } as NormalReqRes);
 
-export const getFollowers = asyncHandler(async function (req, res) {
+export const getFollowers = asyncHandler(async function (req: RequestWithToken, res) {
     const followers = await userServices.getUserFollowers(req);
 
     return res.status(200).json(followers);
-});
+} as NormalReqRes);
 
-export const getFollowing = asyncHandler(async function (req, res) {
+export const getFollowing = asyncHandler(async function (req: RequestWithToken, res) {
     const following = await userServices.getUserFollowing(req);
 
     return res.status(200).json(following);
-});
+} as NormalReqRes);
 
 export const deleteUser = asyncHandler(async function (req: RequestWithToken, res) {
     await userServices.deleteOneUser(req.requestingUser);
     return res.status(200).json({
         message: "succesfully deleted user"
     });
+} as NormalReqRes);
+
+export const getFeed = asyncHandler(async function (req: RequestWithToken, res) {
+    const feed = await userServices.getUserFeed(req);
+
+    return res.status(200).json(feed);
 } as NormalReqRes);
 
 const userController = {
@@ -79,7 +85,8 @@ const userController = {
     patchUser,
     getFollowers,
     getFollowing,
-    deleteUser
+    deleteUser,
+    getFeed
 };
 
 export default userController;
