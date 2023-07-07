@@ -5,5 +5,5 @@ build
 app/server/public/assets/*
 !app/server/public/assets/default.png
 !app/server/public/assets/for-tests.jpg
-dev_build/*
 dump.rdb
+tsconfig.tsbuildinfo
