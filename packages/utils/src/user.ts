@@ -11,6 +11,7 @@ import type { UserDocument, UserFollowersOrFollowing } from "@rupture/types/src/
 import type { RequestWithToken } from "@rupture/types/src/express";
 import type { MediaDocument } from "@rupture/types/src/media";
 import type { Request } from "express";
+import type { Posts } from "@rupture/types";
 
 export async function updateProfilePicture(req: RequestWithToken, userProfilePicture: MediaDocument): Promise<void> {
     const { requestingUser } = req;
@@ -109,6 +110,34 @@ export async function paginateFollowersOrFollowing(
         .limit(limit)
         .populate({ path: "profilePicture", select: "path -_id" })
         .select("userName -_id")) as any;
+}
+
+export async function getFeed(followingIds: string[], skip: number, limit: number): Promise<Posts> {
+    return (
+        await User.find({ _id: { $in: followingIds } })
+            .populate([
+                {
+                    path: "posts",
+                    select: "-__v -_id -updatedAt",
+                    populate: [
+                        {
+                            path: "mediaId",
+                            select: "path -_id"
+                        },
+                        {
+                            path: "userId",
+                            populate: {
+                                path: "profilePicture",
+                                select: "path -_id"
+                            },
+                            select: "userName profilePicture -_id"
+                        }
+                    ],
+                    options: { skip: Number(skip), limit: Number(limit) }
+                }
+            ])
+            .select("posts -_id")
+    )[0].posts as any;
 }
 
 const userUtils = {

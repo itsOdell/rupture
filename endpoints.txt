@@ -1,12 +1,13 @@
 /* USER */
 GET /api/v1/user/:odell - get info of user 'odell' - done
+GET /api/v1/user/followers/:odell - get a list of users who follower 'odell' - done
+GET /api/v1/user/following/:odell - get a list of users who 'odell' follows - done
+GET /api/v1/user/feed - gets the feed (returns a list of paginated posts that belong to users the the logged in user follows)
 POST /api/v1/user/signup - create an account - done
 POST /api/v1/user/login - login to account - done
 POST /api/v1/user/follow/:odell - follow the user 'odell' - done
 POST /api/v1/user/unfollow/:odell - unfollow the user 'odell' - done
 PATCH /api/v1/user/ - update own account info - done
-GET /api/v1/user/followers/:odell - get a list of users who follower 'odell' - done
-GET /api/v1/user/following/:odell - get a list of users who 'odell' follows - done
 DELETE /api/v1/user - users deletes his account - done
 
 

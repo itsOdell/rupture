@@ -1,5 +1,5 @@
 import User from "./user.model";
-import userUtils from "@rupture/utils/src/user";
+import userUtils, { getFeed } from "@rupture/utils/src/user";
 import userValidators from "@rupture/validator/src/user";
 import { DatabaseError } from "../errors";
 import { setToCache } from "../redis";
@@ -125,32 +125,10 @@ export const getUserFeed = async function (req: RequestWithToken): Promise<Posts
     const { requestingUser } = req;
     const { skip, limit } = req.query;
 
-    const followingIds = (await User.findOne({ userName: requestingUser?.userName }))?.following;
-    const posts = await User.find({ _id: { $in: followingIds } })
-        .populate([
-            {
-                path: "posts",
-                select: "-__v -_id -updatedAt",
-                populate: [
-                    {
-                        path: "mediaId",
-                        select: "path -_id"
-                    },
-                    {
-                        path: "userId",
-                        populate: {
-                            path: "profilePicture",
-                            select: "path -_id"
-                        },
-                        select: "userName profilePicture -_id"
-                    }
-                ],
-                options: { skip: Number(skip), limit: Number(limit) }
-            }
-        ])
-        .select("posts -_id");
+    const followingIds: string[] = (await User.findOne({ userName: requestingUser?.userName }))?.following as string[];
+    const posts = await getFeed(followingIds, Number(skip), Number(limit));
 
-    return posts[0].posts as any;
+    return posts;
 };
 
 export const userServices = {
