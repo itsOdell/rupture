@@ -1,5 +1,5 @@
 import userServices from "./user.service";
-import { asyncHandler } from "@rupture/utils";
+import { asyncHandler } from "../utils";
 import type { NormalReqRes, RequestWithToken } from "@rupture/types";
 
 export const getUser = asyncHandler(async function (req, res) {

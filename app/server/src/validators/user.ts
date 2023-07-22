@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
-import type { signingUpUser, UserDocument, possibleUpdateValues, UserSchema } from "@rupture/types/src/user";
-import { JoiUserSchema, JoiUserLoginSchema, JoiUpdateUserSchema } from "@rupture/server/src/user/user.model";
-import { DatabaseError } from "@rupture/server/src/errors";
+import { DatabaseError } from "../errors";
+import { JoiUserSchema, JoiUserLoginSchema, JoiUpdateUserSchema } from "../user/user.model";
+import type { signingUpUser, UserDocument, possibleUpdateValues, UserSchema } from "@rupture/types";
 
 export async function validateSignUpCredentials(values: signingUpUser): Promise<UserSchema> {
     const { firstName, lastName, userName, email, password } = values;

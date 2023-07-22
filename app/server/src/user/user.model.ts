@@ -2,8 +2,8 @@ import Joi from "joi";
 import Media from "../media/media.model";
 import Post from "../post/post.model";
 import { Schema, model } from "mongoose";
-import { emailValidator, websiteValidator } from "@rupture/validator";
-import { seedDefaultPfpOrGetId } from "@rupture/scripts";
+import { emailValidator, websiteValidator } from "../validators";
+import { seedDefaultPfpOrGetId } from "../scripts";
 import type { UserSchema, possibleUpdateValues } from "@rupture/types";
 
 export const JoiUserSchema = Joi.object<UserSchema>({

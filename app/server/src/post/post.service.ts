@@ -1,5 +1,5 @@
 import { AppError } from "../errors";
-import { createNewPost } from "@rupture/utils";
+import { createNewPost } from "../utils";
 import type { RequestWithToken } from "@rupture/types";
 
 const postServices = {

@@ -1,6 +1,6 @@
 import userRouter from "../../user/user.router";
 import postRouter from "../../post/post.router";
-import { errorHandler } from "@rupture/utils";
+import { errorHandler } from "../../utils";
 import { Router } from "express";
 
 const apiRouter = Router();

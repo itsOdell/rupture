@@ -1,6 +1,6 @@
 import User from "./user.model";
-import userUtils, { getFeed } from "@rupture/utils/src/user";
-import userValidators from "@rupture/validator/src/user";
+import userUtils, { getFeed } from "../utils/user";
+import userValidators from "../validators/user";
 import { DatabaseError } from "../errors";
 import { setToCache } from "../redis";
 import type {

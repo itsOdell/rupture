@@ -1,4 +1,4 @@
-import Media from "@rupture/server/src/media/media.model";
+import Media from "../media/media.model";
 import type { Types } from "mongoose";
 
 export async function seedDefaultPfpOrGetId(): Promise<Types.ObjectId> {

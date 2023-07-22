@@ -1,17 +1,14 @@
 import fs from "fs";
 import jwt from "jsonwebtoken";
-import Media from "@rupture/server/src/media/media.model";
+import Media from "../media/media.model";
 import path from "path";
-import User from "@rupture/server/src/user/user.model";
+import User from "../user/user.model";
 import bcrypt from "bcrypt";
 import { ASSETS_DIR, JWT_SECRET, SALT } from "@rupture/constants";
-import { AppError, DatabaseError } from "@rupture/server/src/errors";
+import { AppError, DatabaseError } from "../errors";
 import type { Types } from "mongoose";
-import type { UserDocument, UserFollowersOrFollowing } from "@rupture/types/src/user";
-import type { RequestWithToken } from "@rupture/types/src/express";
-import type { MediaDocument } from "@rupture/types/src/media";
 import type { Request } from "express";
-import type { Posts } from "@rupture/types";
+import type { UserDocument, UserFollowersOrFollowing, RequestWithToken, MediaDocument, Posts } from "@rupture/types";
 
 export async function updateProfilePicture(req: RequestWithToken, userProfilePicture: MediaDocument): Promise<void> {
     const { requestingUser } = req;

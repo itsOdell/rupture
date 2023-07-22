@@ -2,8 +2,8 @@ import upload from "../multer/";
 import userController from "./user.controller";
 import { Router } from "express";
 import { getFromCache } from "../redis";
-import { verifyTokenAndUser } from "@rupture/middleware";
-import { userFollowCacheKey } from "@rupture/utils";
+import { verifyTokenAndUser } from "../middleware";
+import { userFollowCacheKey } from "../utils";
 
 const userRouter = Router();
 

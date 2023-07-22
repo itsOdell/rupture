@@ -1,5 +1,5 @@
 import postServices from "./post.service";
-import { asyncHandler } from "@rupture/utils";
+import { asyncHandler } from "../utils";
 import type { RequestWithToken } from "@rupture/types";
 import type { Request, Response } from "express";
 

@@ -1,6 +1,6 @@
-import Media from "@rupture/server/src/media/media.model";
-import Post from "@rupture/server/src/post/post.model";
-import type { RequestWithToken } from "@rupture/types/src/express";
+import Media from "../media/media.model";
+import Post from "..//post/post.model";
+import type { RequestWithToken } from "@rupture/types";
 import type { Types } from "mongoose";
 
 export async function createNewPost(req: RequestWithToken): Promise<Types.ObjectId> {

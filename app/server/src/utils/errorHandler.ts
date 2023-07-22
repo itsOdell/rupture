@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { ValidationError } from "joi";
-import { AppError, AuthError, DatabaseError } from "@rupture/server/src/errors";
+import { AppError, AuthError, DatabaseError } from "../errors";
 import type { Request, Response, NextFunction } from "express";
 
 export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction): Response {
