@@ -1,7 +1,8 @@
 {
   "files": [],
   "references": [
-    { "path": "./app/server" },
+    { "path": "./packages/constants" },
     { "path": "./packages/types" },
+    { "path": "./app/server" },
   ]
 }

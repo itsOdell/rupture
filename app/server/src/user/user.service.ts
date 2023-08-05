@@ -6,7 +6,7 @@ import { setToCache } from "../redis";
 import type {
     UserDocument,
     UserFollowersOrFollowing,
-    possibleUpdateValues,
+    possibleUserUpdateValues,
     signingUpUser,
     MediaDocument,
     RequestWithToken,
@@ -77,7 +77,7 @@ export const unFollowOneUser = async function (req: RequestWithToken): Promise<v
 
 export const patchOneUser = async function (req: RequestWithToken): Promise<void> {
     const { requestingUser } = req;
-    const toUpdate: possibleUpdateValues = req.body;
+    const toUpdate: possibleUserUpdateValues = req.body;
 
     await userValidators.validateToUpdate(toUpdate);
     await userValidators.updateUserWithValidValues(requestingUser, toUpdate);
