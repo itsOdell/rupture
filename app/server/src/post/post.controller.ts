@@ -1,7 +1,6 @@
 import postServices from "./post.service";
 import { asyncHandler } from "../utils";
-import type { RequestWithToken } from "@rupture/types";
-import type { Request, Response } from "express";
+import type { NormalReqRes, RequestWithToken } from "@rupture/types";
 
 export const uploadPost = asyncHandler(async function (req: RequestWithToken, res) {
     await postServices.postOnePost(req);
@@ -9,4 +8,17 @@ export const uploadPost = asyncHandler(async function (req: RequestWithToken, re
     return res.status(200).json({
         message: "Successfully posted post"
     });
-} as (req: Request, res: Response) => Promise<Response>);
+} as NormalReqRes);
+
+export const deletePost = asyncHandler(async function (req: RequestWithToken, res) {
+    return res.status(200).json({
+        message: "Successfully deleted post"
+    });
+} as NormalReqRes);
+
+const postController = {
+    uploadPost,
+    deletePost
+};
+
+export default postController;

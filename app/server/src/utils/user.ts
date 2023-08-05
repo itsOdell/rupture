@@ -8,7 +8,14 @@ import { ASSETS_DIR, JWT_SECRET, SALT } from "@rupture/constants";
 import { AppError, DatabaseError } from "../errors";
 import type { Types } from "mongoose";
 import type { Request } from "express";
-import type { UserDocument, UserFollowersOrFollowing, RequestWithToken, MediaDocument, Posts } from "@rupture/types";
+import type {
+    UserDocument,
+    UsersFollowerList,
+    UsersFollowingList,
+    RequestWithToken,
+    MediaDocument,
+    Posts
+} from "@rupture/types";
 
 export async function updateProfilePicture(req: RequestWithToken, userProfilePicture: MediaDocument): Promise<void> {
     const { requestingUser } = req;
@@ -96,11 +103,11 @@ export async function hashPass(password: string): Promise<string> {
     return await bcrypt.hash(password, SALT);
 }
 
-export async function paginateFollowersOrFollowing(
+export async function paginateUsersFollowersOrFollowing(
     ids: string[],
     skip: number,
     limit: number
-): Promise<UserFollowersOrFollowing | []> {
+): Promise<UsersFollowerList | UsersFollowingList> {
     // returns a paginated list of users from the specified user's followers/following list
     return (await User.find({ _id: { $in: ids } })
         .skip(skip)
@@ -149,7 +156,7 @@ const userUtils = {
     userFollowCacheKey,
     getUserInfo,
     hashPass,
-    paginateFollowersOrFollowing
+    paginateUsersFollowersOrFollowing
 };
 
 export default userUtils;

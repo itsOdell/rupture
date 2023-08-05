@@ -5,7 +5,8 @@ import { DatabaseError } from "../errors";
 import { setToCache } from "../redis";
 import type {
     UserDocument,
-    UserFollowersOrFollowing,
+    UsersFollowerList,
+    UsersFollowingList,
     possibleUserUpdateValues,
     signingUpUser,
     MediaDocument,
@@ -33,7 +34,7 @@ export const createOneUser = async function (userInfo: signingUpUser): Promise<U
     if (userExists !== null) {
         throw new DatabaseError("That username or email is already in use, please use a new username or email", 409);
     }
-    // reassigning by reference and not by variable so it takes effect
+
     userInfo.password = await userUtils.hashPass(password);
 
     return await new User({ ...userInfo }).save();
@@ -88,29 +89,29 @@ export const patchOneUser = async function (req: RequestWithToken): Promise<void
         await userUtils.updateProfilePicture(req, userProfilePicture);
     }
 
-    const updatedUserToCache = await userUtils.getUserInfo(requestingUser!.userName);
+    const updatedUser = await userUtils.getUserInfo(requestingUser!.userName);
 
-    await setToCache(requestingUser!.userName, JSON.stringify(updatedUserToCache));
+    await setToCache(requestingUser!.userName, JSON.stringify(updatedUser));
 };
 
-export const getUserFollowers = async function (req: RequestWithToken): Promise<UserFollowersOrFollowing> {
+export const getUserFollowers = async function (req: RequestWithToken): Promise<UsersFollowerList> {
     const { requestedUser } = req.params;
     const { skip, limit } = req.query;
 
     const followerIds = (await User.findOne({ userName: requestedUser }))?.followers;
-    const followers = await userUtils.paginateFollowersOrFollowing(followerIds!, Number(skip), Number(limit));
+    const followers = await userUtils.paginateUsersFollowersOrFollowing(followerIds!, Number(skip), Number(limit));
 
     await setToCache(userUtils.userFollowCacheKey(req, "followers"), JSON.stringify(followers), 300);
 
     return followers;
 };
 
-export const getUserFollowing = async function (req: RequestWithToken): Promise<UserFollowersOrFollowing> {
+export const getUserFollowing = async function (req: RequestWithToken): Promise<UsersFollowingList> {
     const { requestedUser } = req.params;
     const { skip, limit } = req.query;
 
     const followingIds = (await User.findOne({ userName: requestedUser }))?.following;
-    const following = await userUtils.paginateFollowersOrFollowing(followingIds!, Number(skip), Number(limit));
+    const following = await userUtils.paginateUsersFollowersOrFollowing(followingIds!, Number(skip), Number(limit));
 
     await setToCache(userUtils.userFollowCacheKey(req, "following"), JSON.stringify(following), 300);
 

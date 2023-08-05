@@ -42,11 +42,20 @@ export interface possibleUserUpdateValues {
     bio?: string;
     phoneNumber?: string;
 }
-export interface FollowerOrFollowing {
+export interface UsersFollowers {
     userName: string;
     profilePicture: {
         path: string;
     };
 }
 
-export type UserFollowersOrFollowing = FollowerOrFollowing[] | FollowerOrFollowing;
+export interface UsersFollowing {
+    userName: string;
+    profilePicture: {
+        path: string;
+    };
+}
+
+export type UsersFollowerList = UsersFollowers[] | UsersFollowers;
+
+export type UsersFollowingList = UsersFollowing[] | UsersFollowers;

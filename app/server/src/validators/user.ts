@@ -33,6 +33,7 @@ export async function passwordMatches(password: string, hashedPassword: string):
 }
 
 export async function validateToUpdate(toUpdate: possibleUserUpdateValues): Promise<void> {
+    // Deletes all nullish type values and tests it against JOI user schema
     Object.keys(toUpdate).forEach(item =>
         toUpdate[item as keyof possibleUserUpdateValues] == null
             ? delete toUpdate[item as keyof possibleUserUpdateValues]

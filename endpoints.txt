@@ -2,7 +2,7 @@
 GET /api/v1/user/:odell - get info of user 'odell' - done
 GET /api/v1/user/followers/:odell - get a list of users who follower 'odell' - done
 GET /api/v1/user/following/:odell - get a list of users who 'odell' follows - done
-GET /api/v1/user/feed - gets the feed (returns a list of paginated posts that belong to users the the logged in user follows)
+GET /api/v1/user/feed - gets the feed (returns a list of paginated posts that belong to users the the logged in user follows) - done
 POST /api/v1/user/signup - create an account - done
 POST /api/v1/user/login - login to account - done
 POST /api/v1/user/follow/:odell - follow the user 'odell' - done

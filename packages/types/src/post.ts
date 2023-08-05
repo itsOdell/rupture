@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import type { Types, Document } from "mongoose";
 import type { MediaSchema } from "./media";
+
 export interface PostSchema {
     mediaId: MediaSchema;
     likes: string[];
