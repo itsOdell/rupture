@@ -32,7 +32,7 @@ export type UserDocument =
 
 export type signingUpUser = Pick<UserSchema, "firstName" | "lastName" | "userName" | "email" | "password">;
 
-export interface possibleUpdateValues {
+export interface possibleUserUpdateValues {
     firstName?: string;
     lastName?: string;
     userName?: string;

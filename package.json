@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "build": "tsc -b -i",
+        "build": "tsc -b",
         "start:dev": "NODE_ENV=development nodemon app/server/src/app.ts",
         "start:prod": "NODE_ENV=production nodemon app/server/src/app.ts",
         "test": "NODE_ENV=test jest --detectOpenHandles",

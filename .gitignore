@@ -7,3 +7,4 @@ app/server/public/assets/*
 !app/server/public/assets/for-tests.jpg
 dump.rdb
 tsconfig.tsbuildinfo
+dist
