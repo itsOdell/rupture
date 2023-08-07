@@ -1,8 +1,12 @@
 import User from "./user.model";
+import Media from "../media/media.model";
+import fs from "node:fs";
+import path from "node:path";
 import userUtils, { getFeed } from "../utils/user";
 import userValidators from "../validators/user";
 import { DatabaseError } from "../errors";
 import { setToCache } from "../redis";
+import { ASSETS_DIR } from "@rupture/constants";
 import type {
     UserDocument,
     UsersFollowerList,
@@ -86,7 +90,24 @@ export const patchOneUser = async function (req: RequestWithToken): Promise<void
     const userProfilePicture: MediaDocument = (await requestingUser!.populate("profilePicture"))?.profilePicture as any;
 
     if (req.file !== undefined) {
-        await userUtils.updateProfilePicture(req, userProfilePicture);
+        const userHasDefaultPicture = userProfilePicture?.filename === "default.png";
+
+        if (!userHasDefaultPicture) {
+            // this means that if the user has already uploaded a pfp before, delete that.
+            const userPrevImage = await Media.findOne({ userId: requestingUser?._id });
+            fs.unlinkSync(path.join(ASSETS_DIR, userPrevImage!.path));
+            await userPrevImage?.deleteOne();
+        }
+
+        const newImage = await new Media({
+            originalname: req.file?.originalname,
+            filename: req.file?.filename,
+            path: `/assets/${req.file!.filename}`,
+            userId: requestingUser?._id
+        }).save();
+
+        requestingUser!.profilePicture = String(newImage._id);
+        await requestingUser?.save();
     }
 
     const updatedUser = await userUtils.getUserInfo(requestingUser!.userName);

@@ -1,42 +1,11 @@
-import fs from "fs";
 import jwt from "jsonwebtoken";
-import Media from "../media/media.model";
-import path from "path";
 import User from "../user/user.model";
 import bcrypt from "bcrypt";
-import { ASSETS_DIR, JWT_SECRET, SALT } from "@rupture/constants";
+import { JWT_SECRET, SALT } from "@rupture/constants";
 import { AppError, DatabaseError } from "../errors";
 import type { Types } from "mongoose";
 import type { Request } from "express";
-import type {
-    UserDocument,
-    UsersFollowerList,
-    UsersFollowingList,
-    RequestWithToken,
-    MediaDocument,
-    Posts
-} from "@rupture/types";
-
-export async function updateProfilePicture(req: RequestWithToken, userProfilePicture: MediaDocument): Promise<void> {
-    const { requestingUser } = req;
-    const userHasDefaultPicture = userProfilePicture?.filename === "default.png";
-
-    if (!userHasDefaultPicture) {
-        const userPrevImage = await Media.findOne({ userId: requestingUser?._id });
-        fs.unlinkSync(path.join(ASSETS_DIR, userPrevImage!.path));
-        await userPrevImage?.deleteOne();
-    }
-
-    const newImage = await new Media({
-        originalname: req.file?.originalname,
-        filename: req.file?.filename,
-        path: `/assets/${req.file!.filename}`,
-        userId: requestingUser?._id
-    }).save();
-
-    requestingUser!.profilePicture = String(newImage._id);
-    await requestingUser?.save();
-}
+import type { UserDocument, UsersFollowerList, UsersFollowingList, Posts } from "@rupture/types";
 
 export function tryingToFollowUnfollowSelf(requestingUser: UserDocument, userToTest: UserDocument): void {
     if (requestingUser!._id.equals(userToTest!._id)) {
@@ -145,7 +114,6 @@ export async function getFeed(followingIds: string[], skip: number, limit: numbe
 }
 
 const userUtils = {
-    updateProfilePicture,
     tryingToFollowUnfollowSelf,
     unFollowTheUser,
     alreadyUnfollowing,
