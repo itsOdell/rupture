@@ -65,7 +65,7 @@ export const followOneUser = async function (req: RequestWithToken): Promise<voi
     userUtils.tryingToFollowUnfollowSelf(requestingUser, userToFollow);
     userUtils.alreadyFollowing(requestingUser, userToFollow);
 
-    await userUtils.followTheUser(requestingUser, userToFollow);
+    await userUtils.followOrUnfollowUser("follow", requestingUser, userToFollow);
 };
 
 export const unFollowOneUser = async function (req: RequestWithToken): Promise<void> {
@@ -77,7 +77,7 @@ export const unFollowOneUser = async function (req: RequestWithToken): Promise<v
     userUtils.tryingToFollowUnfollowSelf(requestingUser, userToUnfollow);
     userUtils.alreadyUnfollowing(requestingUser, userToUnfollow);
 
-    await userUtils.unFollowTheUser(requestingUser, userToUnfollow);
+    await userUtils.followOrUnfollowUser("unfollow", requestingUser, userToUnfollow);
 };
 
 export const patchOneUser = async function (req: RequestWithToken): Promise<void> {

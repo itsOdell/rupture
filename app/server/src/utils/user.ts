@@ -7,20 +7,31 @@ import type { Types } from "mongoose";
 import type { Request } from "express";
 import type { UserDocument, UsersFollowerList, UsersFollowingList } from "@rupture/types";
 
+export async function followOrUnfollowUser(
+    type: "follow" | "unfollow",
+    requestingUser: UserDocument,
+    targetUser: UserDocument
+): Promise<void> {
+    if (type === "follow") {
+        targetUser?.followers.push(String(requestingUser?._id));
+        await targetUser?.save();
+        requestingUser?.following.push(String(targetUser?._id));
+        await requestingUser?.save();
+    } else {
+        const requestingUserIndex = targetUser?.followers.indexOf(String(requestingUser?._id));
+        const targetUserIndex = requestingUser?.following.indexOf(String(targetUser?._id));
+
+        targetUser?.followers.splice(requestingUserIndex!, 1);
+        await targetUser?.save();
+        requestingUser?.following.splice(targetUserIndex!, 1);
+        await requestingUser?.save();
+    }
+}
+
 export function tryingToFollowUnfollowSelf(requestingUser: UserDocument, userToTest: UserDocument): void {
     if (requestingUser!._id.equals(userToTest!._id)) {
         throw new Error("You cannot follow/unfollow yourself");
     }
-}
-
-export async function unFollowTheUser(requestingUser: UserDocument, userToUnfollow: UserDocument): Promise<void> {
-    const requestingUserIndex = userToUnfollow?.followers.indexOf(String(requestingUser?._id));
-    const userToUnfollowIndex = requestingUser?.following.indexOf(String(userToUnfollow?._id));
-
-    userToUnfollow?.followers.splice(requestingUserIndex!, 1);
-    await userToUnfollow?.save();
-    requestingUser?.following.splice(userToUnfollowIndex!, 1);
-    await requestingUser?.save();
 }
 
 export function alreadyUnfollowing(requestingUser: UserDocument, userToFollow: UserDocument): void {
@@ -29,13 +40,6 @@ export function alreadyUnfollowing(requestingUser: UserDocument, userToFollow: U
     if (!isFollowed) {
         throw new AppError(`You are already unfollowing ${userToFollow!.userName}`, 400);
     }
-}
-
-export async function followTheUser(requestingUser: UserDocument, userToFollow: UserDocument): Promise<void> {
-    userToFollow?.followers.push(String(requestingUser?._id));
-    await userToFollow?.save();
-    requestingUser?.following.push(String(userToFollow?._id));
-    await requestingUser?.save();
 }
 
 export function createToken(value: { user: { id: Types.ObjectId; userName: string } }): string {
@@ -87,9 +91,8 @@ export async function paginateUsersFollowersOrFollowing(
 
 const userUtils = {
     tryingToFollowUnfollowSelf,
-    unFollowTheUser,
+    followOrUnfollowUser,
     alreadyUnfollowing,
-    followTheUser,
     createToken,
     userExists,
     alreadyFollowing,
