@@ -1,12 +1,13 @@
 import User from "./user.model";
 import Media from "../media/media.model";
 import fs from "node:fs";
+import bcrypt from "bcrypt";
 import path from "node:path";
 import userUtils from "../utils/user";
 import userValidators from "../validators/user";
 import { DatabaseError } from "../errors";
 import { setToCache } from "../redis";
-import { ASSETS_DIR } from "@rupture/constants";
+import { ASSETS_DIR, SALT } from "@rupture/constants";
 import type {
     UserDocument,
     UsersFollowerList,
@@ -39,7 +40,7 @@ export const createOneUser = async function (userInfo: signingUpUser): Promise<U
         throw new DatabaseError("That username or email is already in use, please use a new username or email", 409);
     }
 
-    userInfo.password = await userUtils.hashPass(password);
+    userInfo.password = await bcrypt.hash(password, SALT);
 
     return await new User({ ...userInfo }).save();
 };

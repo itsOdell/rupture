@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../user/user.model";
-import bcrypt from "bcrypt";
-import { JWT_SECRET, SALT } from "@rupture/constants";
+import { JWT_SECRET } from "@rupture/constants";
 import { AppError, DatabaseError } from "../errors";
 import type { Types } from "mongoose";
 import type { Request } from "express";
@@ -72,10 +71,6 @@ export const getUserInfo = async function (userName: string): Promise<UserDocume
         .select("firstName lastName userName profilePicture bio website postCount followerCount followingCount");
 };
 
-export async function hashPass(password: string): Promise<string> {
-    return await bcrypt.hash(password, SALT);
-}
-
 export async function paginateUsersFollowersOrFollowing(
     ids: string[],
     skip: number,
@@ -98,7 +93,6 @@ const userUtils = {
     alreadyFollowing,
     userFollowCacheKey,
     getUserInfo,
-    hashPass,
     paginateUsersFollowersOrFollowing
 };
 
