@@ -5,7 +5,7 @@ import { JWT_SECRET, SALT } from "@rupture/constants";
 import { AppError, DatabaseError } from "../errors";
 import type { Types } from "mongoose";
 import type { Request } from "express";
-import type { UserDocument, UsersFollowerList, UsersFollowingList, Posts } from "@rupture/types";
+import type { UserDocument, UsersFollowerList, UsersFollowingList } from "@rupture/types";
 
 export function tryingToFollowUnfollowSelf(requestingUser: UserDocument, userToTest: UserDocument): void {
     if (requestingUser!._id.equals(userToTest!._id)) {
@@ -83,34 +83,6 @@ export async function paginateUsersFollowersOrFollowing(
         .limit(limit)
         .populate({ path: "profilePicture", select: "path -_id" })
         .select("userName -_id")) as any;
-}
-
-export async function getFeed(followingIds: string[], skip: number, limit: number): Promise<Posts> {
-    return (
-        await User.find({ _id: { $in: followingIds } })
-            .populate([
-                {
-                    path: "posts",
-                    select: "-__v -_id -updatedAt",
-                    populate: [
-                        {
-                            path: "mediaId",
-                            select: "path -_id"
-                        },
-                        {
-                            path: "userId",
-                            populate: {
-                                path: "profilePicture",
-                                select: "path -_id"
-                            },
-                            select: "userName profilePicture -_id"
-                        }
-                    ],
-                    options: { skip: Number(skip), limit: Number(limit) }
-                }
-            ])
-            .select("posts -_id")
-    )[0].posts as any;
 }
 
 const userUtils = {

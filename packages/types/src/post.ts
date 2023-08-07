@@ -22,7 +22,7 @@ export type PostDocument =
           >)
     | null;
 
-export type Posts = Post[];
+export type Posts = Post[] | string[];
 
 export interface Post {
     commentCount: number;

@@ -2,7 +2,7 @@ import User from "./user.model";
 import Media from "../media/media.model";
 import fs from "node:fs";
 import path from "node:path";
-import userUtils, { getFeed } from "../utils/user";
+import userUtils from "../utils/user";
 import userValidators from "../validators/user";
 import { DatabaseError } from "../errors";
 import { setToCache } from "../redis";
@@ -148,9 +148,32 @@ export const getUserFeed = async function (req: RequestWithToken): Promise<Posts
     const { skip, limit } = req.query;
 
     const followingIds: string[] = (await User.findOne({ userName: requestingUser?.userName }))?.following as string[];
-    const posts = await getFeed(followingIds, Number(skip), Number(limit));
 
-    return posts;
+    return (
+        await User.find({ _id: { $in: followingIds } })
+            .populate([
+                {
+                    path: "posts",
+                    select: "-__v -_id -updatedAt",
+                    populate: [
+                        {
+                            path: "mediaId",
+                            select: "path -_id"
+                        },
+                        {
+                            path: "userId",
+                            populate: {
+                                path: "profilePicture",
+                                select: "path -_id"
+                            },
+                            select: "userName profilePicture -_id"
+                        }
+                    ],
+                    options: { skip: Number(skip), limit: Number(limit) }
+                }
+            ])
+            .select("posts -_id")
+    )[0].posts;
 };
 
 export const userServices = {
