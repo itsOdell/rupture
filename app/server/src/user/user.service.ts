@@ -148,31 +148,32 @@ export const getUserFeed = async function (req: RequestWithToken): Promise<Posts
 
     const followingIds: string[] = (await User.findOne({ userName: requestingUser?.userName }))?.following as string[];
 
-    return (
-        await User.find({ _id: { $in: followingIds } })
-            .populate([
-                {
-                    path: "posts",
-                    select: "-__v -_id -updatedAt",
-                    populate: [
-                        {
-                            path: "mediaId",
+    const [feed] = await User.find({ _id: { $in: followingIds } })
+        .populate([
+            {
+                path: "posts",
+                select: "-__v -_id -updatedAt",
+                populate: [
+                    {
+                        path: "mediaId",
+                        select: "path -_id"
+                    },
+                    {
+                        path: "userId",
+                        populate: {
+                            path: "profilePicture",
                             select: "path -_id"
                         },
-                        {
-                            path: "userId",
-                            populate: {
-                                path: "profilePicture",
-                                select: "path -_id"
-                            },
-                            select: "userName profilePicture -_id"
-                        }
-                    ],
-                    options: { skip: Number(skip), limit: Number(limit) }
-                }
-            ])
-            .select("posts -_id")
-    )[0].posts;
+                        select: "userName profilePicture -_id"
+                    }
+                ],
+                options: { skip: Number(skip), limit: Number(limit) }
+            }
+        ])
+        .select("posts -_id");
+
+    return feed !== undefined ? feed.posts : [];
+    // above line of code returns the users feed or an empty array if the user doesn't follow anyone
 };
 
 export const userServices = {
