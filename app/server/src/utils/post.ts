@@ -4,14 +4,7 @@ import type { Types } from "mongoose";
 import { createMedia } from "../media/media.service";
 
 export async function createNewPost(req: RequestWithToken): Promise<Types.ObjectId> {
-    const { originalname, filename } = req.file!;
-
-    const mediaForPost = await createMedia({
-        originalname,
-        filename,
-        path: `/assets/${filename}`,
-        userId: req.requestingUser?._id
-    });
+    const mediaForPost = await createMedia(req);
 
     const uploadedPost = await new Post({
         userId: req.requestingUser!._id,

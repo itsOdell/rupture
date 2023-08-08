@@ -99,12 +99,7 @@ export const patchOneUser = async function (req: RequestWithToken): Promise<void
             await userPrevImage?.deleteOne();
         }
 
-        const newImage = await createMedia({
-            originalname: req.file.originalname,
-            filename: req.file.filename,
-            path: `/assets/${req.file.filename}`,
-            userId: requestingUser?._id
-        });
+        const newImage = await createMedia(req);
 
         requestingUser!.profilePicture = String(newImage?._id);
         await requestingUser?.save();

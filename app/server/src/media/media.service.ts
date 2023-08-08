@@ -1,7 +1,7 @@
 import Media from "./media.model";
 import { Types } from "mongoose";
 import { DatabaseError } from "../errors";
-import type { MediaDocument, MediaCreationValues } from "@rupture/types";
+import type { MediaCreationValues, MediaDocument, RequestWithToken } from "@rupture/types";
 
 export const getMediaById = async function (id: string): Promise<MediaDocument | void> {
     Types.ObjectId.isValid(id);
@@ -14,21 +14,13 @@ export const getMediaById = async function (id: string): Promise<MediaDocument |
     return mediaExists;
 };
 
-export async function createMedia({
-    originalname,
-    filename,
-    path,
-    userId
-}: MediaCreationValues): Promise<MediaDocument> {
-    const values = {
-        originalname,
-        filename,
-        path
+export async function createMedia(req: RequestWithToken): Promise<MediaDocument> {
+    const values: MediaCreationValues = {
+        originalname: req.file!.originalname,
+        filename: req.file!.filename,
+        path: `/assets/${req.file?.filename}`,
+        userId: req.requestingUser!._id
     };
-
-    if (userId !== undefined) {
-        Object.assign(values, { userId });
-    }
 
     return await new Media({ ...values }).save();
 }
