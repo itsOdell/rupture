@@ -36,7 +36,7 @@ userRouter.get(
 userRouter.post("/follow/:userName", verifyTokenAndUser, userController.followUser);
 userRouter.post("/unfollow/:userName", verifyTokenAndUser, userController.unFollowUser);
 userRouter.patch("/", verifyTokenAndUser, upload.single("profilePicture"), userController.patchUser);
-// ^ fix media still being uploaded even if falsy values
+// ^ fix media still being uploaded even if falsy values, i can do this by adding more middleware before it
 userRouter.delete("/", verifyTokenAndUser, userController.deleteUser);
 
 export default userRouter;

@@ -48,3 +48,10 @@ export interface ProfilePicture {
 export interface MediaId {
     path: string;
 }
+
+export interface MediaCreationValues {
+    originalname: string;
+    filename: string;
+    path: string;
+    userId?: Types.ObjectId;
+}
