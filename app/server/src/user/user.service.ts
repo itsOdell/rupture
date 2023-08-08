@@ -63,8 +63,7 @@ export const followOneUser = async function (req: RequestWithToken): Promise<voi
 
     userUtils.userExists(userToFollow);
 
-    userUtils.tryingToFollowUnfollowSelf(requestingUser, userToFollow);
-    userUtils.alreadyFollowing(requestingUser, userToFollow);
+    userValidators.validFollowOrUnfollowRequest("follow", requestingUser, userToFollow);
 
     await userUtils.followOrUnfollowUser("follow", requestingUser, userToFollow);
 };
@@ -75,8 +74,7 @@ export const unFollowOneUser = async function (req: RequestWithToken): Promise<v
 
     userUtils.userExists(userToUnfollow);
 
-    userUtils.tryingToFollowUnfollowSelf(requestingUser, userToUnfollow);
-    userUtils.alreadyUnfollowing(requestingUser, userToUnfollow);
+    userValidators.validFollowOrUnfollowRequest("unfollow", requestingUser, userToUnfollow);
 
     await userUtils.followOrUnfollowUser("unfollow", requestingUser, userToUnfollow);
 };

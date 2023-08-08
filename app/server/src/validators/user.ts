@@ -1,7 +1,27 @@
 import bcrypt from "bcrypt";
-import { DatabaseError } from "../errors";
+import { AppError, DatabaseError } from "../errors";
 import { JoiUserSchema, JoiUserLoginSchema, JoiUpdateUserSchema } from "../user/user.model";
 import type { signingUpUser, UserDocument, possibleUserUpdateValues, UserSchema } from "@rupture/types";
+
+export function validFollowOrUnfollowRequest(
+    type: "follow" | "unfollow",
+    requestingUser: UserDocument,
+    targetUser: UserDocument
+): void {
+    const isFollowed: boolean = targetUser?.followers.includes(String(requestingUser?._id)) as boolean;
+    if (requestingUser!._id.equals(targetUser!._id)) {
+        throw new Error("You cannot follow/unfollow yourself");
+    }
+    if (type === "follow") {
+        if (isFollowed) {
+            throw new AppError(`You are already following ${targetUser!.userName}`, 400);
+        }
+    } else {
+        if (!isFollowed) {
+            throw new AppError(`You are already unfollowing ${targetUser!.userName}`, 400);
+        }
+    }
+}
 
 export async function validateSignUpCredentials(values: signingUpUser): Promise<UserSchema> {
     const { firstName, lastName, userName, email, password } = values;
@@ -57,7 +77,8 @@ const userValidators = {
     validateLoginCredentials,
     passwordMatches,
     validateToUpdate,
-    updateUserWithValidValues
+    updateUserWithValidValues,
+    validFollowOrUnfollowRequest
 };
 
 export default userValidators;

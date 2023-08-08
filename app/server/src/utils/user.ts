@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../user/user.model";
 import { JWT_SECRET } from "@rupture/constants";
-import { AppError, DatabaseError } from "../errors";
+import { DatabaseError } from "../errors";
 import type { Types } from "mongoose";
 import type { Request } from "express";
 import type { UserDocument, UsersFollowerList, UsersFollowingList } from "@rupture/types";
@@ -27,20 +27,6 @@ export async function followOrUnfollowUser(
     }
 }
 
-export function tryingToFollowUnfollowSelf(requestingUser: UserDocument, userToTest: UserDocument): void {
-    if (requestingUser!._id.equals(userToTest!._id)) {
-        throw new Error("You cannot follow/unfollow yourself");
-    }
-}
-
-export function alreadyUnfollowing(requestingUser: UserDocument, userToFollow: UserDocument): void {
-    const isFollowed: boolean = userToFollow?.followers.includes(String(requestingUser?._id)) as boolean;
-
-    if (!isFollowed) {
-        throw new AppError(`You are already unfollowing ${userToFollow!.userName}`, 400);
-    }
-}
-
 export function createToken(value: { user: { id: Types.ObjectId; userName: string } }): string {
     return jwt.sign(value, JWT_SECRET);
 }
@@ -51,15 +37,8 @@ export function userExists(userToCheck: UserDocument): void {
     }
 }
 
-export function alreadyFollowing(requestingUser: UserDocument, userToFollow: UserDocument): void {
-    const isFollowed: boolean = userToFollow?.followers.includes(String(requestingUser?._id)) as boolean;
-
-    if (isFollowed) {
-        throw new AppError(`You are already following ${userToFollow!.userName}`, 400);
-    }
-}
-
 export const userFollowCacheKey = (req: Request, followersOrFollowing: "followers" | "following"): string =>
+    // returns a string in the format of 'user:follower=0:10' to be used as a key in redis to cache a users follower or following list
     `${req.params.requestedUser}?${followersOrFollowing}=${req.query.skip}:${req.query.limit}`;
 
 export const getUserInfo = async function (userName: string): Promise<UserDocument | null> {
@@ -85,12 +64,9 @@ export async function paginateUsersFollowersOrFollowing(
 }
 
 const userUtils = {
-    tryingToFollowUnfollowSelf,
     followOrUnfollowUser,
-    alreadyUnfollowing,
     createToken,
     userExists,
-    alreadyFollowing,
     userFollowCacheKey,
     getUserInfo,
     paginateUsersFollowersOrFollowing
